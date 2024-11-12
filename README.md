@@ -10,12 +10,14 @@ Ogni sotto-cartella include:
   * in formato WSDL per API di tipo SOAP.
 
 ### Esempio struttura delle cartelle
-RegioneLombardia/PDND/
-├── API/
-│   ├── NomeAPI_1/
-│   │   ├── documentazione.pdf
-│   │   └── descrittore.yaml
-│   ├── NomeAPI_2/
-│   │   ├── documentazione.pdf
-│   │   └── descrittore.wsdl
-│   └── ...
+  ```
+  RegioneLombardia/PDND/
+  ├── API/
+  |   ├── NomeAPI_1/
+  |   |   ├── DocumentazioneTecnicaNomeAPI_1.pdf
+  |   |   └── DescrittoreNomeAPI_1.yaml
+  |   ├── NomeAPI_2/
+  |   |   ├── DocumentazioneTecnicaNomeAPI_2.pdf
+  |   |   └── DescrittoreNomeAPI_2.yaml
+  |   └── ...
+  ```
