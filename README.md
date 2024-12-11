@@ -12,12 +12,10 @@ Ogni sotto-cartella include:
 ### Esempio struttura delle cartelle
   ```
   RegioneLombardia/PDND/
-  ├── API/
-  |   ├── NomeAPI_1/
-  |   |   ├── DocumentazioneTecnicaNomeAPI_1.pdf
-  |   |   └── DescrittoreNomeAPI_1.yaml
-  |   ├── NomeAPI_2/
-  |   |   ├── DocumentazioneTecnicaNomeAPI_2.pdf
-  |   |   └── DescrittoreNomeAPI_2.yaml
+  ├── e-services/
+  |   ├── NomeAPI1_DocumentazioneTecnica.pdf
+  |   ├── NomeAPI1.yaml
+  |   ├── NomeAPI2_DocumentazioneTecnica.pdf
+  |   ├── NomeAPI2.yaml
   |   └── ...
   ```
