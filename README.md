@@ -13,9 +13,11 @@ Ogni sotto-cartella include:
   ```
   RegioneLombardia/PDND/
   ├── e-services/
-  |   ├── NomeAPI1_DocumentazioneTecnica.pdf
-  |   ├── NomeAPI1.yaml
-  |   ├── NomeAPI2_DocumentazioneTecnica.pdf
-  |   ├── NomeAPI2.yaml
-  |   └── ...
+      ├── NomeAPI1
+          ├── NomeAPI1_DocumentazioneTecnica.pdf
+          ├── NomeAPI1.yaml
+      ├── NomeAPI2
+          ├── NomeAPI2_DocumentazioneTecnica.pdf
+          ├── NomeAPI2.yaml
+      └── ...
   ```
