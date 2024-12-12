@@ -9,9 +9,9 @@ info:
     email: assistenza_api@regione.lombardia.it
 
 servers:
-    - url: https://api.servizirl.it/c/servizi.rl/sagre/opendata
+    - url: https://api.servizirl.it/c/servizi.rl/sagre/opendata/sef/events
       description: Url in ambiente di Collaudo PDND
-    - url:
+    - url: https://api.servizirl.it/c/servizi.rl/sagre/opendata/sef/events
       description: Url in ambiente di Produzione PDND
 
 paths:
