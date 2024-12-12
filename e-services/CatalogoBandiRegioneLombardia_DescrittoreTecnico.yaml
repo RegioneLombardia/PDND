@@ -1,0 +1,109 @@
+openapi: 3.0.1
+info:
+  title: Catalogo Bandi di Regione Lombardia
+  description: Il servizio consente la ricezione delle informazioni esposte sulla piattaforma Bandi e Servizi. Nello specifico permette la ricerca, consultazione ed acquisizione delle informazioni relative all'elenco dei bandi, gare di beni e servizi, concorsi pubblici e manifestazioni di interesse promossi da Regione Lombardia e finanziati con fondi regionali, nazionali ed europei.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/agora_catalogo/v1.0.0
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/agora_catalogo/v1.0.0
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /catalogo/ricerca:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+
+  /catalogo/dettaglio/{codice bando}:
+    get:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /catalogo/elenco:
+    get:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /anagrafica/{codice anagrafica}:
+    get:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per Catalogo Bandi di Regione Lombardia
+  url: https://github.com/RegioneLombardia/PDND/blob/e81cea02e2b42584cef4c30c83b901dc5ad7fed8/e-services/CatalogoBandiRegioneLombardia_DocumentazioneTecnica.pdf
+
