@@ -105,7 +105,7 @@ paths:
 components: {}
 externalDocs: 
   description: Documento di Specifiche Tecniche per Catalogo Bandi di Regione Lombardia
-  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/CatalogoBandiRegioneLombardia_ManualeUtente.pdf
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/CatalogoBandiRegioneLombardia/CatalogoBandiRegioneLombardia_ManualeUtente.pdf
 
 
 
