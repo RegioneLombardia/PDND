@@ -1,0 +1,47 @@
+openapi: 3.0.1
+info:
+  title: Sagre e fiere in Lombardia
+  description: Il servizio consente l'esposizione del calendario annuale delle sagre e fiere lombarde raccolte da Regione Lombardia in collaborazione con enti locali (Comuni) con possibilità di estrazione per territorio (località) o per data.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/sagre
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/sagre
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /sef/events:
+    get:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per Catalogo Bandi di Regione Lombardia
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/SagreEFiereInLombardia/SagreEFiereInLombardia_ManualeUtente.pdf
