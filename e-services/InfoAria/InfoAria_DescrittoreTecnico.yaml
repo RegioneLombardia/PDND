@@ -1,0 +1,35 @@
+openapi: 3.0.1
+info:
+  title: Info Aria
+  description: Il servizio permette di cercare all’interno della banca dati regionale i comuni del Bacino Padano che aderiscono all’Accordo Aria; per ogni comune verranno indicate le misure temporanee di contrasto all’inquinamento attive.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/e015pm10
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/e015pm10
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /services/cerca/limitazioniAttive:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User 
+      x-throttling-tier: Unlimited
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per API Info Aria
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/InfoAria/InfoAria_ManualeUtente.pdf
+
