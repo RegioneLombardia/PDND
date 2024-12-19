@@ -1,0 +1,129 @@
+openapi: 3.0.1
+info:
+  title: Allerte di Protezione Civile
+  description: Il servizio espone i dati emessi quotidianamente dalla Protezione Civile - Centro Funzionale Monitoraggio Rischi Naturali - di Regione Lombardia per i livelli di allerta dei rischi naturali previsti sul territorio regionale nelle 36 ore successive. Sono a disposizione i dati (alfanumerici e geografici) relativi agli intervalli di previsione e ai livelli di allertamento riferiti a ciascuna zona omogenea per tipo di rischio.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/gcwse015/api/app
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/gcwse015/api/app
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /cerca/allIntervalliPrevisione:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+  /cerca/allLivelliAllertamento:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/allRischiZoneRischio:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/allProvince:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/comuni:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/zoneOmogenee:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/allertamentoComuni:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/allertamentoZoneOmogenee:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/allFasiOperative:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/ArchivioAllerte:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per Catalogo Bandi di Regione Lombardia
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/AllerteDiProtezioneCivileDellaRegioneLombardia/AllerteDiProtezioneCivileDellaRegioneLombardia_ManualeUtente.pdf
+
+
+
