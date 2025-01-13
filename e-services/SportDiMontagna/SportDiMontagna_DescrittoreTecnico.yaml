@@ -1,0 +1,109 @@
+openapi: 3.0.1
+info:
+  title: Catalogo Bandi di Regione Lombardia
+  description: Il servizio consente la ricezione delle informazioni esposte sulla piattaforma Bandi e Servizi. Nello specifico permette la ricerca, consultazione ed acquisizione delle informazioni relative all'elenco dei bandi, gare di beni e servizi, concorsi pubblici e manifestazioni di interesse promossi da Regione Lombardia e finanziati con fondi regionali, nazionali ed europei.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/osm_sport
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/osm_impianti
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /stazionisciistiche:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /piste:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+
+  /impiantiRisalita:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /scuole:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per l'API Sport Di Montagna
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/SportDiMontagna/SportDiMontagna_ManualeUtente.pdf
+
