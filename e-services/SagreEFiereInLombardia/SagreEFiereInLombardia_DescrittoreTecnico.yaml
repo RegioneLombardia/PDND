@@ -33,5 +33,5 @@ paths:
 
 components: {}
 externalDocs: 
-  description: Documento di Specifiche Tecniche per Catalogo Bandi di Regione Lombardia
+  description: Documento di Specifiche Tecniche per Sagre e fiere in Lombardia
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/SagreEFiereInLombardia/SagreEFiereInLombardia_ManualeUtente.pdf
