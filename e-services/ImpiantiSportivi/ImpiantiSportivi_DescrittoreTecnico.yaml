@@ -42,5 +42,5 @@ paths:
 components: {}
 externalDocs: 
   description: Documento di Specifiche Tecniche per l'API Impianti Sportivi
-  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/ImpiantiSportivi/Impiantisportivi_ManualeUtente.pdf
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/ImpiantiSportivi/ImpiantiSportivi_ManualeUtente.pdf
 
