@@ -22,7 +22,7 @@ paths:
     #parameters:
        # $ref: '#/externalDocs'
 
-  /protected/jsonservices/programmitriennali:
+  /pprogrammitriennali:
     get:
       responses:
         "200":
@@ -31,7 +31,7 @@ paths:
       x-auth-type: Application & Application User 
       x-throttling-tier: Unlimited
   
-  /protected/jsonservices/programmitriennali:
+  /programmitriennali:
     post:
       requestBody: 
         description: Request Body
@@ -51,7 +51,7 @@ paths:
       x-throttling-tier: Unlimited
       x-codegen-request-body-name: Payload
     
-  /protected/jsonservices/programmibiennali:
+  /programmibiennali:
     get:
       responses:
         "200":
@@ -60,7 +60,7 @@ paths:
       x-auth-type: Application & Application User 
       x-throttling-tier: Unlimited
 
-  /protected/jsonservices/programmibiennali:
+  /programmibiennali:
     post:
       requestBody: 
         description: Request Body
