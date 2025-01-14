@@ -21,16 +21,6 @@ paths:
 
   /cerca/allIntervalliPrevisione:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -39,18 +29,9 @@ paths:
       x-throttling-tier: Unlimited
       x-codegen-request-body-name: Payload
 
-  /cerca/allLivelliAllertamento:
+
+  /cerca/allIntervalliPrevisione:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -58,21 +39,9 @@ paths:
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
       x-codegen-request-body-name: Payload
-
-
 
   /cerca/allRischiZoneRischio:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -83,16 +52,6 @@ paths:
 
   /cerca/allProvince:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -103,16 +62,6 @@ paths:
 
   /cerca/comuni:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -123,16 +72,6 @@ paths:
 
   /cerca/zoneOmogenee:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -143,16 +82,6 @@ paths:
 
   /cerca/allertamentoComuni:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -163,16 +92,6 @@ paths:
 
   /cerca/allertamentoZoneOmogenee:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -183,16 +102,6 @@ paths:
 
   /cerca/allFasiOperative:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -203,16 +112,6 @@ paths:
 
   /cerca/ArchivioAllerte:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -223,6 +122,5 @@ paths:
 
 components: {}
 externalDocs: 
-  description: Documento di Specifiche Tecniche per Allerte Di Protezione Civile
+  description: Documento di Specifiche Tecniche per l'API Allerte Di Protezione Civile
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/AllerteDiProtezioneCivile/AllerteDiProtezioneCivile_ManualeUtente.pdf
-
