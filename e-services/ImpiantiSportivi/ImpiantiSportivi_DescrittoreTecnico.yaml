@@ -19,7 +19,7 @@ paths:
     #parameters:
        # $ref: '#/externalDocs'
 
-  /endpoint:
+  /impiantiSportivi:
     post:
       requestBody: 
         description: Request Body
