@@ -39,8 +39,7 @@ paths:
       x-throttling-tier: Unlimited
       x-codegen-request-body-name: Payload
 
-
-  /cerca/allIntervalliPrevisione:
+  /cerca/allLivelliAllertamento:
     get:
       requestBody: 
         description: Request Body
@@ -59,6 +58,8 @@ paths:
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
       x-codegen-request-body-name: Payload
+
+
 
   /cerca/allRischiZoneRischio:
     get:
