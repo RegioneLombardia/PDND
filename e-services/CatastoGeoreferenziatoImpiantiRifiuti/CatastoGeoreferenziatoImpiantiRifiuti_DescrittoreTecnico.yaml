@@ -1,0 +1,56 @@
+openapi: 3.0.1
+info:
+  title: Catasto Georeferenziato Impianti Rifiuti 
+  description: Il servizio permette di cercare i dati tecnici ed amministrativi relativi a tutti gli impianti, compresi quelli mobili, autorizzati ad effettuare operazioni di gestione dei rifiuti.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/cgr-e015
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/cgr-e015
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /cerca/ricercaUnitaLocale:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /cerca/dettaglioUnitaLocale:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User 
+      x-throttling-tier: Unlimited
+
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per API Catasto Georeferenziato Impianti Rifiuti
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/CatastoGeoreferenziatoImpiantiRifiuti/CatastoGeoreferenziatoImpiantiRifiuti_ManualeUtente.pdf
+
