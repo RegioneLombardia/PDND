@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interop.servizirl.it/schema/richiestapratica/1.0" xmlns:pratica="http://interop.servizirl.it/schema/pratica/1.0" xmlns:scia="http://interop.servizirl.it/schema/scia/1.0" xmlns:muta="http://interop.servizirl.it/schema/muta/1.0" xmlns:protocol="http://interop.servizirl.it/schema/protocol/1.0" targetNamespace="http://interop.servizirl.it/schema/richiestapratica/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified"> -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://interop.servizirl.it/schema/richiestapratica/1.0"
+	xmlns:pratica="http://interop.servizirl.it/schema/pratica/1.0"
+	xmlns:protocol="http://interop.servizirl.it/schema/protocol/1.0"
+	targetNamespace="http://interop.servizirl.it/schema/richiestapratica/1.0"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>Richiesta Pratica</xs:documentation>
+		<xs:documentation>Versione 1.0</xs:documentation>
+	</xs:annotation>
+	<!-- <xs:import namespace="http://interop.servizirl.it/schema/muta/1.0" schemaLocation="schema-muta.xsd"/> -->
+	<xs:import
+		namespace="http://interop.servizirl.it/schema/protocol/1.0"
+		schemaLocation="schema-protocol-types.xsd" />
+	<xs:import
+		namespace="http://interop.servizirl.it/schema/pratica/1.0"
+		schemaLocation="schema-pratica-types.xsd" />
+	<xs:element name="RichiestaPratica" type="richiestaPraticaType" />
+	<xs:element name="RispostaRichiestaPratica"
+		type="sceltaRispostaRichiestaPraticaType" />
+	<xs:complexType name="sceltaRispostaRichiestaPraticaType">
+		<xs:choice>
+			<xs:element name="Risposta"
+				type="rispostaRichiestaPraticaType" />
+			<xs:element name="Eccezione" type="protocol:eccezioneType" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="richiestaPraticaType">
+		<xs:complexContent>
+			<xs:extension base="protocol:richiestaType">
+				<xs:sequence>
+					<xs:element name="CodicePratica"
+						type="pratica:codicePraticaType" />
+					<xs:element name="TipoProcedimento"
+						type="pratica:tipoProcedimentoType" />
+					<xs:element name="InformazioniAusiliarie" 
+						type="xs:anyType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="rispostaRichiestaPraticaType">
+		<xs:complexContent>
+			<xs:extension base="protocol:rispostaType">
+				<xs:sequence>
+					<xs:element ref="pratica:Pratica" />
+					<!-- 
+							Informazioni ausiliarie relative alla specifica tipologia di pratica 
+							(con schema di riferimento da definire separatamente da parte dell'infrastruttura di interoperabilità regionale 
+							per ciascuna tipologia di pratica). Possono essere popolate soltanto dall'infrastruttura di interoperabilità regionale
+					 -->
+					<xs:element name="InformazioniAusiliarie" type="xs:anyType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

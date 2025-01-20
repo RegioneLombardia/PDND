@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://interop.servizirl.it/schema/getlistapratica/1.0"
+	xmlns:pratica="http://interop.servizirl.it/schema/pratica/1.0"
+	xmlns:protocol="http://interop.servizirl.it/schema/protocol/1.0"
+	targetNamespace="http://interop.servizirl.it/schema/getlistapratica/1.0"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>Richiesta Pratica</xs:documentation>
+		<xs:documentation>Versione 1.0</xs:documentation>
+	</xs:annotation>
+	<!-- <xs:import namespace="http://interop.servizirl.it/schema/muta/1.0" schemaLocation="schema-muta.xsd"/> -->
+	<xs:import
+		namespace="http://interop.servizirl.it/schema/protocol/1.0"
+		schemaLocation="schema-protocol-types.xsd" />
+	<xs:import
+		namespace="http://interop.servizirl.it/schema/pratica/1.0"
+		schemaLocation="schema-pratica-types.xsd" />
+	<xs:element name="RichiestaListaPratiche" type="richiestaListaPraticheType" />
+	<xs:element name="RispostaRichiestaListaPratiche"
+		type="rispostaRichiestaListaPraticheType" />
+	<xs:complexType name="rispostaRichiestaListaPraticheType">
+		<xs:choice>
+			<xs:element name="Risposta"
+				type="rispostaListaPraticheType" />
+			<xs:element name="Eccezione" type="protocol:eccezioneType" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="richiestaListaPraticheType">
+		<xs:complexContent>
+			<xs:extension base="protocol:richiestaType">
+				<xs:sequence>
+					<xs:element name="TipoEnte" type="xs:string"/>
+					<xs:element name="CodUnivocoEnte" type="xs:string"/>
+					<xs:element name="TipoProcedimento"
+						type="pratica:tipoProcedimentoType" />
+					<xs:choice>
+						<xs:element name="dataRichiesta" type="xs:date"/>
+						<xs:element name="intervalloDate" type="intervalloDateType"/>
+					</xs:choice>
+					<xs:element name="InformazioniAusiliarie" type="xs:anyType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="intervalloDateType">
+		<xs:sequence>
+			<xs:element name="dataInizio" type="xs:date"/>
+			<xs:element name="dataFine" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="rispostaListaPraticheType">
+		<xs:complexContent>
+			<xs:extension base="protocol:rispostaType">
+				<xs:sequence>
+					<xs:element name="listaPratiche" type="listaPraticheType"/>
+					<!-- 
+							Informazioni ausiliarie relative alla specifica tipologia di pratica 
+							(con schema di riferimento da definire separatamente da parte dell'infrastruttura di interoperabilità regionale 
+							per ciascuna tipologia di pratica). Possono essere popolate soltanto dall'infrastruttura di interoperabilità regionale
+					 -->
+					<xs:element name="InformazioniAusiliarie" type="xs:anyType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="listaPraticheType">
+		<xs:sequence>
+			<xs:element name="pratica" type="praticaType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="praticaType">
+		<xs:sequence>
+			<xs:element name="idPratica" type="xs:string"/>
+			<xs:element name="statoPratica" type="xs:string"/>
+			<xs:element name="dataAggiornamento" type="xs:dateTime"/>
+			<xs:element name="dataConsegna" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="InformazioniAggiuntive" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
