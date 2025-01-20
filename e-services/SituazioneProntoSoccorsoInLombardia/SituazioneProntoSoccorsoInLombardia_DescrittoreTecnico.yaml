@@ -63,5 +63,5 @@ paths:
 components: {}
 externalDocs: 
   description: Documento di Specifiche Tecniche per l'API Situazione Pronto Soccorso in Lombardia
-  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/SituazioneProntoSoccorsoInLombardia/SituazioneProntosoccorsoInLombardia_ManualeUtente.pdf
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/SituazioneProntoSoccorsoInLombardia/SituazioneProntoSoccorsoInLombardia_ManualeUtente.pdf
 
