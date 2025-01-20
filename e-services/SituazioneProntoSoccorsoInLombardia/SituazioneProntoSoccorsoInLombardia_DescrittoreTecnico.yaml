@@ -19,7 +19,7 @@ paths:
     #parameters:
        # $ref: '#/externalDocs'
 
-  /v2/ lista-pronto-soccorso HTTP/1.1:
+  /v2/lista-pronto-soccorso:
     post:
       requestBody: 
         description: Request Body
@@ -39,7 +39,7 @@ paths:
       x-throttling-tier: Unlimited
       x-codegen-request-body-name: Payload
 
-  /v3/dettaglio-pronto-soccorso HTTP/1.1:
+  /v3/dettaglio-pronto-soccorso:
     post:
       requestBody: 
         description: Request Body
