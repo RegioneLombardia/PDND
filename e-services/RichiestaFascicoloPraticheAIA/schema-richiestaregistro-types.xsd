@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interop.servizirl.it/schema/richiestaregistro/1.0" xmlns:pratica="http://interop.servizirl.it/schema/pratica/1.0" xmlns:scia="http://interop.servizirl.it/schema/scia/1.0" xmlns:muta="http://interop.servizirl.it/schema/muta/1.0" xmlns:protocol="http://interop.servizirl.it/schema/protocol/1.0" targetNamespace="http://interop.servizirl.it/schema/richiestaregistro/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified"> -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://interop.servizirl.it/schema/richiestaregistro/1.0"
+	xmlns:pratica="http://interop.servizirl.it/schema/pratica/1.0"
+	xmlns:protocol="http://interop.servizirl.it/schema/protocol/1.0"
+	targetNamespace="http://interop.servizirl.it/schema/richiestaregistro/1.0"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>Richiesta Registro Edma</xs:documentation>
+		<xs:documentation>Versione 1.0</xs:documentation>
+	</xs:annotation>
+	<!-- <xs:import namespace="http://interop.servizirl.it/schema/muta/1.0" schemaLocation="schema-muta.xsd"/> -->
+	<xs:import
+		namespace="http://interop.servizirl.it/schema/protocol/1.0"
+		schemaLocation="schema-protocol-types.xsd" />
+	<xs:import
+		namespace="http://interop.servizirl.it/schema/pratica/1.0"
+		schemaLocation="schema-pratica-types.xsd" />
+	<xs:element name="RichiestaRegistro" type="richiestaRegistroType" />
+	<xs:element name="RispostaRichiestaRegistro"
+		type="rispostaRichiestaRegistroType" />
+	<xs:complexType name="rispostaRichiestaRegistroType">
+		<xs:choice>
+			<xs:element name="Risposta"
+				type="registroType" />
+			<xs:element name="Eccezione" type="protocol:eccezioneType" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="richiestaRegistroType">
+		<xs:complexContent>
+			<xs:extension base="protocol:richiestaType">
+				<xs:sequence>
+					<xs:element name="TipoProcedimento"
+						type="pratica:tipoProcedimentoType" />
+					<xs:element name="TipoEnte" type="xs:string"/>
+					<xs:element name="TipoRegistro" type="tipoRegistroType"/>
+					<xs:element name="CodUnivocoEnte" type="xs:string"/>
+					<xs:element name="dataRegistro" type="xs:date"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="tipoRegistroType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ANNUALE"/>
+			<xs:enumeration value="GIORNALIERO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="registroType">
+		<xs:complexContent>
+			<xs:extension base="protocol:rispostaType">
+				<xs:sequence>
+					<xs:element name="TipoRegistro" type="tipoRegistroType"/>
+					<xs:element name="dataRegistro" type="xs:date"/>
+					<xs:element name="Allegati" type="pratica:allegatiPraticaType"/>
+					<xs:element name="InformazioniAusiliarie" type="xs:anyType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
