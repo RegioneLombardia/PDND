@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://interop.servizirl.it/schema/protocol/1.0" 
+	targetNamespace="http://interop.servizirl.it/schema/protocol/1.0" 
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>SIAP - Protocol</xs:documentation>
+		<xs:documentation>
+			Versione 1.0
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="sceltaRispostaType" abstract="true">
+		<xs:choice>
+			<xs:element name="Eccezione" type="eccezioneType"/>
+			<xs:element name="Risposta" type="rispostaType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="richiestaType" abstract="true">
+		<xs:attribute name="idRichiesta" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="rispostaType" abstract="true">
+		<xs:attribute name="idRichiesta" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="eccezioneType">
+		<xs:complexContent>
+			<xs:extension base="rispostaType">
+				<xs:sequence>
+					<xs:element name="Nota" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Tipo" type="tipoEccezioneType"/>
+					<!--
+					<xs:element name="Tipo">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Infrastrutturale"/>
+								<xs:enumeration value="Comunicazione"/>
+								<xs:enumeration value="Altro"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					-->
+					<xs:element name="Codice" type="xs:string" minOccurs="0"/>
+					<xs:element name="Descrizione" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="tipoEccezioneType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Infrastrutturale"/>
+			<xs:enumeration value="Comunicazione"/>
+			<xs:enumeration value="Altro"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
