@@ -21,16 +21,6 @@ paths:
 
   /venue-list:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -41,16 +31,6 @@ paths:
 
   /get-venue:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -62,16 +42,6 @@ paths:
 
   /venue-list-by-id:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
