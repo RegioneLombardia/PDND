@@ -21,16 +21,6 @@ paths:
 
   /rest/categServWeb/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -41,16 +31,6 @@ paths:
 
   /rest/categorieProd/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -61,16 +41,6 @@ paths:
 
   /rest/categInfoTurist/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -82,16 +52,6 @@ paths:
  
   /rest/servizi/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -102,16 +62,6 @@ paths:
 
   /rest/prodotti/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -122,16 +72,6 @@ paths:
 
   /rest/province/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -142,16 +82,6 @@ paths:
 
   /rest/comuni/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -162,16 +92,6 @@ paths:
 
   /rest/territori/getAll:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -182,16 +102,6 @@ paths:
 
   /rest/ricercaLibera:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -202,36 +112,6 @@ paths:
 
   /rest/ricercaAgriServizi:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
-      responses:
-        "200":
-          description: ""
-          content: {}
-      x-auth-type: Application & Application User
-      x-throttling-tier: Unlimited
-      x-codegen-request-body-name: Payload
-
-  /rest/ricercaAgriServizi:
-    get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -242,16 +122,6 @@ paths:
 
   /rest/ricercaAgriTerritori:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -262,16 +132,6 @@ paths:
 
   /rest/getApertureAgriturismo:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -282,16 +142,6 @@ paths:
 
   /rest/getInfoTuristAgriturismo:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -302,16 +152,6 @@ paths:
 
   /rest/foto/getAllByIdAzienda:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
@@ -325,4 +165,3 @@ components: {}
 externalDocs: 
   description: Documento di Specifiche Tecniche per l'API Agriturismi in Lombardia
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/AgriturismiInLombardia/AgriturismiInLombardia_ManualeUtente.pdf
-
