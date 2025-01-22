@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: CONSULTAZIONE EVENTI ISTITUZIONALI REGIONE LOMBARDIA
+  description: Il servizio consente di ricercare e leggere le informazioni di un evento organizzato a palazzo di Regione Lombardia presenti sulla piattaforma Eventi. Le informazioni disponibili sono di carattere anagrafico quali data inizio/fine, locazione e descrizione generale dell'evento.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/eventi-rl
+      description: Url in ambiente di Collaudo PDND
+    - url:
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /event-platform-api-manager/events-list:
+    get:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+  /event-platform-api-manager/event-detail:
+    get:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per L'API Consultazione degli Eventi Istituzionali di Regione Lombardia
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/ConsultazioneEventiIstituzionaliRegioneLombardia/ConsultazioneEventiIstituzionaliRegioneLombardia_ManualeUtente.pdf
+
+
+
