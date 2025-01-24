@@ -1,0 +1,680 @@
+openapi: 3.0.3
+info:
+  title: Orari e Percorsi del trasporto pubblico locale
+  description: La API permette di cercare orari e percorsi per muoversi in Lombardia con treni, autobus, metropolitane, tram e altri servizi di trasporto pubblico.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/tplapi
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/tplapi
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  /tplapi/v1.0.0/search:
+    get:
+      summary: Il servizio permette di ricercare i punti di partenza/arrivo della soluzione di viaggio (ricerca coordinate) a partire da una descrizione
+      operationId: searchAddressGet
+      parameters:
+        - name: param
+          in: query
+          description: Stringa di ricerca del punto di partenza/arrivo. Stringa con lunghezza tra 2 e 100 caratteri. Obbligatorio.
+          required: true
+          schema:
+            type: string
+        - name: maxResult
+          in: query
+          description: Numero massimo di risultati restituiti dal servizio. Numero intero da 1 a 200. Se =0 o null, si assume il valore di default =200. Se si inserisce un numero superiore a 200, si assume il limite massimo (=200).
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dati recuperati con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+    post:
+      summary: Il servizio permette di ricercare i punti di partenza/arrivo della soluzione di viaggio (ricerca coordinate) a partire da una descrizione
+      operationId: searchAddressPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterTextDTO'
+      responses:
+        '200':
+          description: Dati recuperati con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+  
+  /tplapi/v1.0.0/solution:
+    get:
+      summary: Il servizio permette di ricercare soluzioni di viaggio da un punto di partenza ad un punto di arrivo in un certo momento
+      operationId: apiManagerSolutions
+      parameters:
+        - name: param
+          in: query
+          description: Parametro opzionale per filtrare le soluzioni
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Risposta con successo contenente i dati delle soluzioni
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionsDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+    post:
+      summary: Il servizio permette di ricercare soluzioni di viaggio da un punto di partenza ad un punto di arrivo in un certo momento
+      operationId: apiManagerSolutionsPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestSolutionDTO'
+      responses:
+        '200':
+          description: Risposta con successo contenente i dati delle soluzioni
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionsDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+  
+  /tplapi/v1.0.0/timetablesValidity:
+    get:
+      summary: Il servizio permette di visualizzare le validità degli orari di ogni azienda che fornisce i dati a “Muoversi in Lombardia”.
+      operationId: apiManagersearchHoursValidity
+      responses:
+        '200':
+          description: Risposta con successo contenente i dati di validità degli orari
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HoursValidityDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+  
+  /tplapi/v1.0.0/timetables:
+    get:
+      summary: Il servizio permette di ricercare gli orari di passaggio delle corse alla fermata
+      operationId: apiManagerTimeTables
+      parameters:
+        - name: param
+          in: query
+          description: Richiesta
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Risposta con successo contenente i dati degli orari
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopsTimeTableDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+    post:
+      summary: Il servizio permette di visualizzare le validità degli orari di ogni azienda che fornisce i dati a “Muoversi in Lombardia”.
+      operationId: apiManagerTimeTablesPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestStopsDTO'
+      responses:
+        '200':
+          description: Risposta con i dati degli orari delle fermate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopsTimeTableDTO'
+        '400':
+          description: Richiesta non valida a causa di eventi eccezionali non legati all'elaborazione della richiesta
+        '500':
+          description: Errore interno del server
+
+
+components:
+  schemas:
+    AddressDTO:
+      type: object
+      properties:
+        stato:
+          type: string
+          description: Codice di stato della risposta (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "-1"
+            - "0"
+        points:
+          type: array
+          description: Oggetto contenente la lista dei punti trovati
+          items:
+            $ref: '#/components/schemas/AddressPointDTO'
+        errori:
+          type: array
+          description: Oggetto contenente la lista di eventuali errori
+          items:
+            $ref: '#/components/schemas/ErrorDTO'
+    
+    AddressPointDTO:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Nome del punto
+        type:
+          type: string
+          description: Tipologia del punto trovato (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "areadifermata"
+            - "civico"
+            - "comune"
+            - "indirizzo"
+            - "poi"
+
+        x:
+          type: string
+          description: Coordinata X del punto espressa nel sistema di riferimento WGS84. Numero compreso tra -180 +180 con massimo 6 cifre decimali. Separatore “.”.
+
+        y:
+          type: string
+          description: Coordinata Y del punto espressa nel sistema di riferimento WGS84. Numero compreso tra -90 +90 con massimo 6 cifre decimali. Separatore “.”
+
+
+    FilterTextDTO:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Stringa di ricerca del punto di partenza/arrivo. Stringa con lunghezza tra 2 e 100 caratteri. Obbligatorio.
+        maxResult:
+          type: string
+          description: Numero massimo di risultati restituiti dal servizio. Numero intero da 1 a 200. Se =0 o null, si assume il valore di default =200. Se si inserisce un numero superiore a 200, si assume il limite massimo (=200).
+          example: '10'
+
+    SolutionsDTO:
+      type: object
+      properties:
+        stato:
+          type: string
+          description: Codice di stato della risposta (si veda il documento tecnico per ulteriori dettaglii)
+          enum:
+            - "-1"
+            - "0"
+        lang:
+          type: string
+          description: Lingua di riferimento per la restituzione dei messaggi di errore eventualmente generati (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "it"
+            - "en"
+            - "fr"
+            - "de"
+        richiesta:
+          $ref: '#/components/schemas/ContentRequestSolutionsDTO'
+        listaPercorsi:
+          type: array
+          description: Oggetto contenente l’elenco dei percorsi che compongono la soluzione
+          items:
+            $ref: '#/components/schemas/ContentRouteDTO'
+        listaErrori:
+          type: array
+          description: Oggetto contenente la lista di eventuali errori
+          items:
+            $ref: '#/components/schemas/ErrorDTO'
+    
+    ContentRequestSolutionsDTO:
+      type: object
+      properties:
+        from:
+          type: string
+          description: Descrizione del punto di partenza. Stringa con lunghezza massima di 100 caratteri. Opzionale
+        fromX:
+          type: string
+          description: Coordinata x del punto di partenza espressa nel sistema di riferimento WGS84. Numero compreso tra -180 +180. Separatore “.”. Obbligatorio
+        fromY:
+          type: string
+          description: Coordinata y del punto di partenza espressa nel sistema di riferimento WGS84. Numero compreso tra -90 +90. Separatore “.”. Obbligatorio
+        to:
+          type: string
+          description: Descrizione del punto di arrivo. Stringa con lunghezza massima di 100 caratteri. Opzionale
+        toX:
+          type: string
+          description: Coordinata x del punto di partenza espressa nel sistema di riferimento WGS84. Numero compreso tra -180 +180. Separatore “.”. Obbligatorio
+        toY:
+          type: string
+          description: Coordinata y del punto di partenza espressa nel sistema di riferimento WGS84. Numero compreso tra -90 +90. Separatore “.”. Obbligatorio
+        date:
+          type: string
+          description: Data a cui è riferita la ricerca delle soluzioni di viaggio. Data in formato dd/mm/yyyy. Obbligatorio
+        when:
+          type: string
+          description: Ora a cui è riferita la ricerca delle soluzioni di viaggio. Orario in formato hh:mm. Obbligatorio
+        changeNumber:
+          type: string
+          description: Numero massimo di cambi desiderati. Intero. Opzionale. Se null, si assume il valore di default -1 (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+          - "-1"
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        durationChange:
+          type: string
+          description: Durata minima del cambio. Intero. Opzionale. Se null, si assume il valore di default -1 (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+          - "-1"
+          - "0"
+          - "200"
+          - "400"
+        options:
+          type: array
+          description: Mezzi coinvolti nella ricerca delle soluzioni di viaggio. Array di numeri. Obbligatorio (si veda il documento tecnico per ulteriori dettagli)
+          items:
+            type: string
+            enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+        tipoData:
+          type: string
+          description: Indica se i parametri “date” e “when” si riferiscono alla partenza o all’arrivo. Intero. Opzionale. Se null, si assume il valore di default 0 (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+          - "-1"
+          - "0"
+
+    ContentRouteDTO:
+      type: object
+      properties:
+        idPercorso:
+          type: string
+          description: Ordine progressivo delle soluzioni di viaggio trovate
+        partenza:
+          type: string
+          description: Descrizione del punto di partenza della soluzione
+        arrivo:
+          type: string
+          description: Descrizione del punto di arrivo della soluzione
+        oraPartenza:
+          type: string
+          description: Orario di partenza della soluzione. Ora in formato hh:mm
+        oraArrivo:
+          type: string
+          description: Orario di arrivo della soluzione. Ora in formato hh:mm
+        durata:
+          type: string
+          description: Durata complessiva del percorso in minuti. Ora in formato hh:mm
+        numeroCambi:
+          type: string
+          description: Numero di cambi necessari per effettuare il viaggio
+        listaTratte:
+          type: array
+          description: Oggetto contenente l’elenco delle tratte che compongono il percorso della soluzione
+          items:
+            $ref: '#/components/schemas/ContentSectionDTO'
+        mezziPercorso:
+          type: array
+          description: Elenco delle tipologie di mezzo coinvolte nella soluzione (si veda il documento tecnico per ulteriori dettagli)
+          items:
+            type: string
+            enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+        xPartenza:
+          type: string
+          description: Coordinata X del punto espressa nel sistema di riferimento WGS84
+        yPartenza:
+          type: string
+          description: Coordinata Y del punto espressa nel sistema di riferimento WGS84
+        xArrivo:
+          type: string
+          description: Coordinata X del punto espressa nel sistema di riferimento WGS84
+        yArrivo:
+          type: string
+          description: Coordinata Y del punto espressa nel sistema di riferimento WGS84
+
+    ContentSectionDTO:
+      type: object
+      properties:
+        idTratta:
+          type: string
+          description: Ordine progressivo delle tratte che compongono la soluzione. Intero. Obbligatorio
+        partenza:
+          type: string
+          description: Descrizione del punto di partenza della tratta
+        arrivo:
+          type: string
+          description: Descrizione del punto di arrivo della tratta
+        oraPartenza:
+          type: string
+          description: Orario di partenza della tratta. Ora in formato hh:mm
+        oraArrivo:
+          type: string
+          description: Orario di arrivo della tratta. Ora in formato hh:mm
+        xPartenza:
+          type: string
+          description: Coordinata X del punto di partenza espressa nel sistema di riferimento WGS84
+        yPartenza:
+          type: string
+          description: Coordinata Y del punto di partenza espressa nel sistema di riferimento WGS84
+        xArrivo:
+          type: string
+          description: Coordinata X del punto di arrivo espressa nel sistema di riferimento WGS84
+        yArrivo:
+          type: string
+          description: Coordinata Y del punto di arrivo espressa nel sistema di riferimento WGS84
+        durata:
+          type: string
+          description: Durata della tratta in minuti. Ora in formato hh:mm
+        linea:
+          type: string
+          description: Codice della linea contenente la tratta
+        mezzo:
+          type: string
+          description: Identificativo del tipo di mezzo che percorre il tratto. È restituito vuoto se è un tratto a piedi
+        gestore:
+          type: string
+          description: Codice del gestore che effettua il servizio
+        note:
+          type: string
+          description: Note sulla tratta
+        listaFermate:
+          type: array
+          description: Oggetto contenente l’elenco delle fermate che compongono la tratta del percorso della soluzione
+          items:
+            $ref: '#/components/schemas/ContentStopDTO'
+        listaPercorsoCompleto:
+          type: array
+          description: Oggetto contenente l’elenco delle fermate che compongono l’intera corsa della soluzione (quindi anche fermate precedenti o successive della tratta)
+          items:
+            $ref: '#/components/schemas/ContentStopDTO'
+
+    ContentStopDTO:
+      type: object
+      properties:
+        idFermata:
+          type: string
+          description: Ordine progressivo delle fermate nella tratta
+        nome:
+          type: string
+          description: Nome della fermata
+        partenza:
+          type: string
+          description: Orario di partenza dalla fermata. Ora in formato hh:mm
+        arrivo:
+          type: string
+          description: Orario di arrivo nella fermata. Ora in formato hh:mm
+        x:
+          type: string
+          description: Coordinata X della fermata espressa nel sistema di riferimento WGS84
+        y:
+          type: string
+          description: Coordinata Y della fermata espressa nel sistema di riferimento WGS84
+    
+    RequestSolutionDTO:
+      type: object
+      properties:
+        richiesta:
+          $ref: '#/components/schemas/ContentRequestRouteDTO'
+        lang:
+          type: string
+          description: Lingua di riferimento per la restituzione dei messaggi di errore eventualmente generati (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "it"
+            - "en"
+            - "fr"
+            - "de"
+    
+    ContentRequestRouteDTO:
+      type: object
+      properties:
+        from:
+          type: string
+          description: Descrizione del punto di partenza. Stringa con lunghezza massima di 100 caratteri. Opzionale
+        fromX:
+          type: string
+          description: Coordinata x del punto di partenza espressa nel sistema di riferimento WGS84. Numero compreso tra -180 +180. Separatore “.”. Obbligatorio
+        fromY:
+          type: string
+          description: Coordinata y del punto di partenza espressa nel sistema di riferimento WGS84. Numero compreso tra -90 +90. Separatore “.”. Obbligatorio 
+        to:
+          type: string
+          description: Descrizione del punto di arrivo. Stringa con lunghezza massima di 100 caratteri. Opzionale
+        toX:
+          type: string
+          description: Coordinata x del punto di arrivo espressa nel sistema di riferimento WGS84. Numero compreso tra -180 +180. Separatore “.”. Obbligatorio
+        toY:
+          type: string
+          description: Coordinata y del punto di arrivo espressa nel sistema di riferimento WGS84. Numero compreso tra -90 +90. Separatore “.”. Obbligatorio
+        date:
+          type: string
+          description: Data a cui è riferita la ricerca delle soluzioni di viaggio. Data in formato dd/mm/yyyy. Obbligatorio
+        when:
+          type: string
+          description: Ora a cui è riferita la ricerca delle soluzioni di viaggio. Orario in formato hh:mm. Obbligatorio
+        changeNumber:
+          type: string
+          description: Numero massimo di cambi desiderati. Intero. Opzionale. Se null, si assume il valore di default -1 (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+          - "-1"
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        durationChange:
+          type: string
+          description: Durata minima del cambio. Intero. Opzionale. Se null, si assume il valore di default -1 (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+          - "-1"
+          - "0"
+          - "200"
+          - "400"
+        options:
+          type: array
+          description: Mezzi coinvolti nella ricerca delle soluzioni di viaggio. Array di numeri. Obbligatorio (si veda il documento tecnico per ulteriori dettagli)
+          items:
+            type: string
+        tipoData:
+          type: string
+          description: Indica se i parametri “date” e “when” si riferiscono alla partenza o all’arrivo. Intero. Opzionale. Se null, si assume il valore di default 0 (si veda il documento tecnico per ulteriori dettagli)
+        nSolutions:
+          type: string
+          description: Numero massimo di soluzioni restituite dal servizio. Numero intero da 1 a 6. Opzionale. Se null, si assume il valore di default
+    
+    HoursValidityDTO:
+      type: object
+      properties:
+        company:
+          type: string
+          description: Denominazione dell’azienda.  Stringa 500 Char.  Obbligatorio
+        startDate:
+          type: string
+          description: Data di inizio del periodo di validità degli orari.  Data in formato dd/mm/yyyy. Obbligatorioo
+        endDate:
+          type: string
+          description: Data di fine del periodo di validità degli orari.  Data in formato dd/mm/yyyy.  Obbligatorio
+        lastUpdate:
+          type: string
+          description: Data di ultimo aggiornamento degli orari.  Data in formato dd/mm/yyyy.  Obbligatorio
+    
+    StopsTimeTableDTO:
+      type: object
+      properties:
+        stato:
+          type: string
+          description: Codice di stato della risposta (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "-1"
+            - "0"
+        lang:
+          type: string
+          description: Lingua di riferimento per la restituzione dei messaggi di errore eventualmente generati (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "it"
+            - "en"
+            - "fr"
+            - "de"
+        richiesta:
+          $ref: '#/components/schemas/ContentRequestStopDTO'
+        listaOrari:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentHourStopDTO'
+        listaFermate:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentStopTimeTableDTO'
+        listaErrori:
+          type: array
+          description: Oggetto contenente la lista di eventuali errori
+          items:
+            $ref: '#/components/schemas/ErrorDTO'
+
+    ContentRequestStopDTO:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Data a cui è riferita la ricerca. Data in formato dd/mm/yyyy. Obbligatorio
+        stop:
+          type: string
+          description: Descrizione della fermata di cui si ricercano gli orari. Stringa con lunghezza massima di 100 caratteri. Obbligatorio
+        when:
+          type: string
+          description: Ora a cui è riferita la ricerca. Orario in formato hh:mm. Obbligatorio
+        tipoData:
+          type: string
+          description: Indica se i parametri “date” e “when” si riferiscono alla partenza o all’arrivo. Intero. Opzionale. Se null, si assume il valore di default 0 (si veda il documento tecnico per ulteriori dettagli)
+        options:
+          type: array
+          description: Mezzi coinvolti nella ricerca delle soluzioni di viaggio. Array di numeri. Obbligatorio (si veda il documento tecnico per ulteriori dettagli)
+          items:
+            type: string
+
+    ContentHourStopDTO:
+      type: object
+      properties:
+        time:
+          type: string
+          description: Orario di partenza della corsa  Orario in formato hh:mm  Obbligatorio
+        run:
+          type: string
+          description: Descrizione del capolinea della corsa.  Stringa 100 Char.  Obbligatorio
+        line:
+          type: string
+          description: Codice della linea a cui si riferisce l’orario.  Stringa 6 Char.  Obbligatorio
+        transport:
+          type: string
+          description: Identificativo del tipo di mezzo che effettua la corsa.  Array di numeri.  Obbligatorio
+        note:
+          type: string
+          description: Eventuali note
+
+    ContentStopTimeTableDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificativo progressivo della fermata.  Intero.  Obbligatorio
+        stop:
+          type: string
+          description: Descrizione della fermata di cui si ricercano gli orari.  Stringa 100 Char.  Obbligatorio
+        x:
+          type: string
+          description: Coordinata x della fermata espressa nel sistema di riferimento nel sistema WGS84.  Numero.  Obbligatorio
+        y:
+          type: string
+          description: Coordinata y della fermata espressa nel sistema di riferimento nel sistema WGS84  Numero  Obbligatorio
+    
+    RequestStopsDTO:
+      type: object
+      properties:
+        richiesta:
+          $ref: '#/components/schemas/ContentRequestStopTimeTableDTO'
+        lang:
+          type: string
+          description: Lingua di riferimento per la restituzione dei messaggi di errore eventualmente generati (si veda il documento tecnico per ulteriori dettagli)
+          enum:
+            - "it"
+            - "en"
+            - "fr"
+            - "de"
+
+    ContentRequestStopTimeTableDTO:
+      type: object
+      properties:
+        stop:
+          type: string
+          description: Descrizione della fermata di cui si ricercano gli orari. Stringa con lunghezza massima di 100 caratteri. Obbligatorio
+        date:
+          type: string
+          description: Data a cui è riferita la ricerca. Data in formato dd/mm/yyyy. Obbligatorio
+        when:
+          type: string
+          description: Ora a cui è riferita la ricerca. Orario in formato hh:mm. Obbligatorio
+        tipoData:
+          type: string
+          description: Indica se i parametri “date” e “when” si riferiscono alla partenza o all’arrivo. Intero. Opzionale. Se null, si assume il valore di default 0 (si veda il documento tecnico per ulteriori dettagli)
+        options:
+          type: array
+          description: Mezzi coinvolti nella ricerca delle soluzioni di viaggio. Array di numeri. Obbligatorio (si veda il documento tecnico per ulteriori dettagli)
+          items:
+            type: string
+
+    ErrorDTO:
+      type: object
+      properties:
+        codice:
+          type: string
+          description: Codice errore
+        descrizione:
+          type: string
+          description: Descrizione errore
+
+
+
+
+externalDocs: 
+  description: Documento di Specifiche Tecniche per l'API Orari e Percorsi del Trasporto Pubblico Locale
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/OrariEPercorsiDelTrasportoPubblicoLocale/OrariEPercorsiDelTrasportoPubblicoLocale_ManualeUtente.pdf
