@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: PDND_Curit_Erogazione
+  title: Consultazione catasto CURIT Lombardia
   description: CURIT - Catasto Unico Regionale Impianti Termici – Impianti Targati
   version: v1.0.0
   contact:
@@ -9,9 +9,10 @@ info:
     email: assistenza_api@regione.lombardia.it
 servers:
 - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/dati.lombardia/curit
-  descripion: Url in ambiente di Collaudo PDND
-- url: /
+  description: Url in ambiente di Collaudo PDND
+- url: https://api.servizirl.it/c/pdndbasic/erogazione/dati.lombardia/curit
   description: Url in ambiente di Produzione PDND
+
 paths:
   /about_data:
     get:
@@ -21,8 +22,8 @@ paths:
           content: {}
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
+
 components: {}
 externalDocs: 
-  description: Documento di Specifiche Tecniche per l'API CURIT
+  description: Documento di Specifiche Tecniche per l'API Consultazione catasto CURIT Lombardia
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/CURIT/CURIT_ManualeUtente.pdf
-x-original-swagger-version: "2.0"
