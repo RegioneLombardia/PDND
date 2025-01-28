@@ -1,9 +1,9 @@
 openapi: 3.0.0
 servers:
   - description: Ambiente di test
-    url: https://da-definire
+    url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/edt-eventi
   - description: Ambiente di esercizio
-    url: https://da-definire
+    url: TBD
 info:
   title: Eventi in Lombardia
   description: Pubblicazione e ricezione contenuti EDT di tipo Evento
@@ -550,5 +550,5 @@ components:
           example: "il campo title è obbligatorio"
 
 externalDocs: 
-  description: Documento di Specifiche Tecniche per API Catasto Georeferenziato Impianti Rifiuti
+  description: Documento di Specifiche Tecniche per API Eventi in Lombardia
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/EventiInLombardia/EventiInLombardia_ManualeUtente.pdf
