@@ -2,9 +2,9 @@ openapi: 3.0.0
 
 servers:
   - description: Ambiente di test
-    url: https://da-definire
+    url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/edt-esperienze
   - description: Ambiente di esercizio
-    url: https://da-definire
+    url: TBD
 info:
   description: Pubblicazione e ricezione contenuti EDT di tipo Esperienza
   x-summary: Pubblicazione e ricezione contenuti EDT di tipo Esperienza
