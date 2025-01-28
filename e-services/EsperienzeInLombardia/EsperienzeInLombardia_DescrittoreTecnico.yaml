@@ -511,5 +511,5 @@ components:
           example: "il campo title è obbligatorio"
 
 externalDocs: 
-  description: Documento di Specifiche Tecniche per API Catasto Georeferenziato Impianti Rifiuti
+  description: Documento di Specifiche Tecniche per API Esperienze in Lombardia
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/EsperienzeInLombardia/EsperienzeInLombardia_ManualeUtente.pdf
