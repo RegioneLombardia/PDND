@@ -56,4 +56,4 @@ paths:
 components: {}
 externalDocs: 
   description: Documento di Specifiche Tecniche per API SEB CELI-API
-  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/PuntiVenditaCeliaci/PuntiVenditaCeliaci_ManualeUtente.pdf
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/PuntiVenditaPerCeliaci/PuntiVenditaPerCeliaci_ManualeUtente.pdf
