@@ -6,14 +6,15 @@ servers:
   - description: Ambiente di esercizio
     url: TBD
 info:
+  title: Esperienze in Lombardia
   description: Pubblicazione e ricezione contenuti EDT di tipo Esperienza
   x-summary: Pubblicazione e ricezione contenuti EDT di tipo Esperienza
-  x-api-id: Da definire
-  version: "1.0.0"
-  title: EDT Lombardia API Esperienze
-  termsOfService: https://to.be.defined
+  version: v1.0
   contact:
-    email: to@be.defined
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
 tags:
   - name: Interest
     description: Lettura, ricerca, e invio di Esperienze
@@ -512,5 +513,3 @@ components:
 externalDocs: 
   description: Documento di Specifiche Tecniche per API Catasto Georeferenziato Impianti Rifiuti
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/EsperienzeInLombardia/EsperienzeInLombardia_ManualeUtente.pdf
-
-
