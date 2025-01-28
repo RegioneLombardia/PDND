@@ -1,35 +1,36 @@
 openapi: 3.0.0
-
 servers:
   - description: Ambiente di test
     url: https://da-definire
   - description: Ambiente di esercizio
     url: https://da-definire
 info:
-  description: Pubblicazione e ricezione contenuti EDT di tipo Esperienza
-  x-summary: Pubblicazione e ricezione contenuti EDT di tipo Esperienza
-  x-api-id: Da definire
-  version: "1.0.0"
-  title: EDT Lombardia API Esperienze
-  termsOfService: https://to.be.defined
+  title: Eventi in Lombardia
+  description: Pubblicazione e ricezione contenuti EDT di tipo Evento
+  x-summary: Pubblicazione e ricezione contenuti EDT di tipo Evento
+  version: v1.0
   contact:
-    email: to@be.defined
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
 tags:
-  - name: Interest
-    description: Lettura, ricerca, e invio di Esperienze
+  - name: Event
+    description: lettura, ricerca, e invio di Eventi
 security:
   - api_id: []
   - api_secret: []
 paths:
-  /interest:
+  /event:
     get:
       tags:
-        - Interest
-      summary: Restituisce una lista di esperienze
-      operationId: search_interests
-      description: Restituisce le esperienze pubblicate nel sistema
+        - Event
+      summary: Restituisce una lista di eventi
+      operationId: search_events
+      description: Restituisce gli eventi pubblicati nel sistema
       parameters:
         - $ref: '#/components/parameters/Lang'
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Tags'
         - $ref: '#/components/parameters/Locations'
         - $ref: '#/components/parameters/Limit'
@@ -42,10 +43,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  interests:
+                  events:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Interest'
+                      $ref: '#/components/schemas/Event'
         '401':
           description: Credenziali di autenticazione non valide
           content:
@@ -58,27 +59,27 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/ResponseErrorMessage400'
-  /interest/{id}:
+  /event/{id}:
     get:
       tags:
-        - Interest
-      summary: Restituisce i dati di una esperienza
-      operationId: read_interest
-      description: Restituisce i dati di una esperienza
+        - Event
+      summary: Restituisce i dati di un evento
+      operationId: read_event
+      description: Restituisce i dati di un evento
       parameters:
         - name: id
           in: path
           required: true
-          description: Identifica univocamente l'esperienza all'interno di EDT
+          description: Identifica univocamente l'evento all'interno di EDT
           schema:
             type: string
       responses:
         '200':
-          description: Dati dell'esperienza richiesta
+          description: Dati dell'evento richiesto
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Interest'
+                $ref: '#/components/schemas/Event'
         '400':
           description: 'Request non valida'
           content:
@@ -99,15 +100,15 @@ paths:
                 $ref: '#/components/schemas/ResponseErrorMessage404'
     put:
       tags:
-        - Interest
-      summary: Creazione o aggiornamento di una esperienza
-      operationId: upsert_interest
-      description: Creazione di una nuova esperienza, o aggiornamento di una esperienza esistente
+        - Event
+      summary: Creazione o aggiornamento di un evento
+      operationId: upsert_event
+      description: Creazione di un nuovo evento, o aggiornamento di un evento esistente
       parameters:
         - name: id
           in: path
           required: true
-          description: Identifica univocamente l'esperienza da creare o aggiornare secondo la codifica interna del client
+          description: Identifica univocamente l'evento da creare o aggiornare secondo la codifica interna del client
           schema:
             type: string
       responses:
@@ -127,6 +128,7 @@ paths:
                     example: 200
                   identifier:
                     type: string
+                    maxLength: 60
                     example: "123456"
         '400':
           description: 'Request non valida'
@@ -151,8 +153,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Interest'
-        description: Esperienza da creare o aggiornare
+              $ref: '#/components/schemas/Event'
+        description: Evento da creare o aggiornare
 components:
   parameters:
     Locations:
@@ -175,8 +177,24 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Tag'
+    StartDate:
+      description: Verranno restituiti solo gli eventi che iniziano successivamente a questa data, oppure già in corso e non ancora terminati a questa data
+      in: query
+      name: startDate
+      schema:
+        type: string
+        format: date
+        example: "2024-10-25"
+    EndDate:
+      description: Verranno restituiti solo gli eventi non ancora terminati in questa data.
+      in: query
+      name: endDate
+      schema:
+        type: string
+        format: date
+        example: "2024-10-25"
     Lang:
-      description: Lingua dei contenuti. Saranno restituiti solo le esperienze con traduzione nella lingua indicata. In assenza del parametro, per ogni esperienza saranno riportate tutte le traduzioni disponibili.
+      description: Lingua dei contenuti. Saranno restituiti solo gli eventi con traduzione nella lingua indicata. In assenza del parametro, per ogni evento saranno riportate tutte le traduzioni disponibili.
       in: query
       name: lang
       schema:
@@ -188,7 +206,7 @@ components:
           - de
           - es
     Limit:
-      description: numero massimo di esprienze da restituire per ogni request
+      description: numero massimo di eventi da restituire per ogni request
       in: query
       name: limit
       schema:
@@ -198,7 +216,7 @@ components:
         maximum: 100
         default: 100
     Offset:
-      description: "posizione del primo contenuto da restituire nell'elenco delle esperienze corrispondenti ai parametri di ricerca. Es: con offset=50 e limit=100 si ottengono 100 esperienze a partire dalla 51esima"
+      description: "posizione del primo contenuto da restituire nell'elenco degli eventi corrispondenti ai parametri di ricerca. Es: con offset=50 e limit=100 si ottengono 100 eventi a partire dal 51esimo"
       in: query
       name: offset
       schema:
@@ -207,22 +225,24 @@ components:
         minimum: 0
         default: 0
   schemas:
-    Interest:
+    Event:
       type: object
       required:
         - identifier
+        - dates
         - tags
         - address
-        - locations
+        - location
       properties:
         identifier:
           type: string
-          maxLength: 60
           example: "165263"
           description: | 
             ID univoco del contenuto.\
-            Identifica univocamente il contenuto nel sistema di origine, quando l'eperienza viene inviata a EDT.\
-            Identifica univocamente il contenuto nel sistema EDT, quando l'eperienza viene restituita da EDT
+            Identifica univocamente il contenuto nel sistema di origine, quando l'evento viene inviato a EDT.\
+            Identifica univocamente il contenuto nel sistema EDT, quando l'evento viene restituito da EDT
+        dates:
+          $ref: '#/components/schemas/Dates'
         tags:
           type: array
           minItems: 1
@@ -233,38 +253,39 @@ components:
             - 5
             - 10
           description: "Tema/categoria del contenuto. Valori ammessi:<ul><li>1: Active & Green</li><li>2: Arte e Cultura</li><li>3: Borghi</li><li>4: Cicloturismo</li><li>5: Food & Wine</li><li>6: Golf</li><li>7: Itinerari</li><li>8: Laghi</li><li>10: Lifestyle</li><li>11: Montagne</li><li>12: Musica e spettacolo</li><li>14: Parchi</li><li>15: Scuola</li><li>16: Siti Unesco</li><li>17: Sport</li><li>19: Turismo religioso</li><li>20: Wellness</li></ul>"
+        agent:
+          description: L'organizzatore dell'evento
+          type: string
+          maxLength: 60
         contacts:
           type: object
           properties:
             email: 
               type: string
               maxLength: 60
-              pattern: '^(.+)@(.+)$'              
-              example: "test@test.it"
+              pattern: '^(.+)@(.+)$'
+              example: test@test.it
             telephone:
               type: string
               maxLength: 60
-              example: "+39 12354 1235"
+              example: +39 12354 1235
             url:
               type: string
               maxLength: 2048
-              example: "https://site.it"
-        links:
-          type: array
-          items: 
-            $ref: '#/components/schemas/Link'
-          description: "Link ad altri contenuti, ad es: pagine web di prenotazione o approfondimento"
+              example: https://site.it
         area:
           $ref: '#/components/schemas/Area'
-        locations: 
-          description: "Località relative all'esperienza"
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
+        location: 
+          $ref: '#/components/schemas/Location'
         geo:
           $ref: '#/components/schemas/Coords'
         address:
           $ref: '#/components/schemas/Address'
+        links:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Link'
+          description: "Link ad altri contenuti, ad es: pagine web di prenotazione o approfondimento, link lla locandina pdf dell'evento"
         translations:
           type: object
           required:
@@ -281,6 +302,21 @@ components:
             es: 
               $ref: '#/components/schemas/Translation'
           minProperties: 1
+    Dates:
+      description: Data inizio e fine evento in formato ISO8601
+      type: object
+      required:
+        - startDate
+        - endDate
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          example: '2024-05-18T11:00:00+02:00'
+        endDate:
+          type: string
+          format: date-time
+          example: '2024-05-18T15:30:00+02:00'
     Coords:
       type: object
       required:
@@ -289,12 +325,12 @@ components:
       properties:
         longitude:
           type: number
-          format: float
           example: 9.335558
+          format: float
         latitude:
           type: number
-          format: float
           example: 45.895301
+          format: float
     Tag:
       type: integer
       format: int32
@@ -318,21 +354,21 @@ components:
         - 18
         - 19
         - 20
-    Location:
-      type: integer
-      format: int32
-      description: Codice del comune (o frazione), tra quelli previsti.
-      example: 78910
     Area:
       type: integer
       format: int32
       description: "Area turistica di interesse. Valori ammessi:<ul><li>2012 : Lago di Garda</li><li>28856 : Lago di Como</li><li>28857 : Lago di Iseo e Franciacorta</li><li>28858 : Valle Camonica</li><li>28859 : Valtellina</li><li>28860 : Valchiavenna</li><li>29196 : Lago maggiore</li><li>29198 : Valmalenco</li><li>29225 : Pavese</li><li>29227 : Lomellina</li><li>29231 : Oltrepò</li><li>29234 : Lago di Lugano</li><li>29235 : Lago di Varese</li><li>29244 : Aeroporto Malpensa</li><li>29253 : Lodigiano</li></ul>"
       example: 28856
+    Location:
+      type: integer
+      format: int32
+      description: Codice del comune (o frazione), tra quelli previsti.
+      example: 78910
     Address:
       type: object
       required:
-        - addressLocality
         - streetAddress
+        - addressLocality
       properties:
         addressLocality:
           type: string
@@ -349,10 +385,10 @@ components:
           maxLength: 255
           example: "Via Roncaglia Bassa"
         addressPlace:
-          description: una precisazione sull'indirizzo dell'esperienza
+          description: una precisazione sul luogo dell'evento
           type: string
           maxLength: 255
-          example: "A meno di 200 metri dalla Pieve"
+          example: "Biblioteca comunale"
     Translation:
       description: dati localizzabili e differenziabili per ciascuna lingua
       type: object
@@ -364,13 +400,13 @@ components:
         url:
           type: string
           example: "https://www.in-lombardia.it/it/evento/31%C2%B0-festival-milano-musica-swr-vokalensemble-weinberg-ircam"
-          description: E' la URL dell'esperienza pubblicata su in-lombardia.it, specifica per la traduzione corrente
+          description: "E' la URL dell'evento pubblicato su in-lombardia.it, specifica per la traduzione corrente"
           readOnly: true
         externalUrl:
           type: string
           maxLength: 2048
           example: ""
-          description: E' la URL dell'esperienza pubblicata sul sito di origine, da cui l'esperienza è stata importata, specifica per la traduzione corrente (se disponibile)
+          description: E' la URL dell'evento pubblicato sul sito di origine, da cui l'evento è stato importato, specifica per la traduzione corrente (se disponibile)
         title:
           type: string
           example: "31° Festival Milano"
@@ -382,10 +418,14 @@ components:
           maxLength: 150
         description:
           type: string
-          example: "<p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p>"
+          example: "<p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p>"
           description: "Descrizione principale del contenuto. Può contenere tag HTML. I tag utilizzati dal sistema EDT Lombardia sono: a, div, p, br, em, strong, ul, ol, li, hr, h3, h4, h5, h6. Altri tag vengono accettati in input, ma successivamente eliminati in visualizzazione nei canali EDT"
           minLength: 400
           maxLength: 5000
+        openingHours:
+          description: Orari di apertura / accesso all'evento
+          type: string
+          example: "Dalle 20 alle 23.30. Il martedì alle 19"
         images:
           type: array
           items: 
@@ -444,7 +484,7 @@ components:
             - CC_BY-NC-SA_4.0
             - CC_BY-ND_4.0
             - CC_BY-NC-ND_4.0
-          example: "CC_BY_4.0"
+          example: CC_BY_4.0
     Link:
       type: object
       required:
@@ -476,7 +516,7 @@ components:
       properties:
         title:
           type: string
-          example: "Unauthorized"
+          example: Unauthorized
         status:
           type: integer
           format: int32
@@ -512,6 +552,3 @@ components:
 externalDocs: 
   description: Documento di Specifiche Tecniche per API Catasto Georeferenziato Impianti Rifiuti
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/EventiInLombardia/EventiInLombardia_ManualeUtente.pdf
-
-
-
