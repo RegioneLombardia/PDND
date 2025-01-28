@@ -1,0 +1,515 @@
+openapi: 3.0.0
+servers:
+  - description: Ambiente di test
+    url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/edt-poi
+  - description: Ambiente di esercizio
+    url: TBD
+info:
+  title: Punti di interesse in Lombardia
+  description: Pubblicazione e ricezione contenuti EDT di tipo Luogo
+  x-summary: Pubblicazione e ricezione contenuti EDT di tipo Luogo
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+tags:
+  - name: Destination
+    description: Lettura, ricerca, e invio di Luoghi
+security:
+  - api_id: []
+  - api_secret: []
+paths:
+  /destination:
+    get:
+      tags:
+        - Destination
+      summary: Restituisce una lista di luoghi
+      operationId: search_destinations
+      description: Restituisce i luoghi pubblicati nel sistema
+      parameters:
+        - $ref: '#/components/parameters/Lang'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Locations'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  destinations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Destination'
+        '401':
+          description: Credenziali di autenticazione non valide
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrorMessage401'
+        '400':
+          description: 'Request non valida'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrorMessage400'
+  /destination/{id}:
+    get:
+      tags:
+        - Destination
+      summary: Restituisce i dati di un luogo
+      operationId: read_destination
+      description: Restituisce i dati di un luogo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifica univocamente il luogo all'interno di EDT
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dati del luogo richiesto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+        '400':
+          description: 'Request non valida'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrorMessage400'
+        '401':
+          description: Credenziali di autenticazione non valide
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrorMessage401'
+        '404':
+          description: Contenuto non trovato
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrorMessage404'
+    put:
+      tags:
+        - Destination
+      summary: Creazione o aggiornamento di un luogo
+      operationId: upsert_destination
+      description: Creazione di un nuovo luogo, o aggiornamento di un luogo esistente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifica univocamente il luogo da creare o aggiornare secondo la codifica interna del client
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contenuto ricevuto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: "Contenuto acquisito per l'elaborazione"
+                  status:
+                    type: integer
+                    format: int32
+                    example: 200
+                  identifier:
+                    type: string
+                    example: "123456"
+        '400':
+          description: 'Request non valida'
+          content:
+            application/problem+json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponseErrorMessage400'
+                  - type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ResponseErrorProperty'
+        '401':
+          description: Credenziali di autenticazione non valide
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrorMessage401'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination'
+        description: Luogo da creare o aggiornare
+components:
+  parameters:
+    Locations:
+      description: Uno o più location, espresse con i relativi codici, separati da virgole
+      in: query
+      name: locations
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Location'
+    Tags:
+      description: Uno o più temi, espressi con il relativo codice, separati da virgole
+      in: query
+      name: tags
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Tag'
+    Lang:
+      description: Lingua dei contenuti. Saranno restituiti solo i luoghi con traduzione nella lingua indicata. In assenza del parametro, per ogni luogo saranno riportate tutte le traduzioni disponibili.
+      in: query
+      name: lang
+      schema:
+        type: string
+        enum:
+          - it
+          - en
+          - fr
+          - de
+          - es
+    Limit:
+      description: numero massimo di luoghi da restituire per ogni request
+      in: query
+      name: limit
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 100
+        default: 100
+    Offset:
+      description: "posizione del primo contenuto da restituire nell'elenco dei luoghi corrispondenti ai parametri di ricerca. Es: con offset=50 e limit=100 si ottengono 100 luoghi a partire dal 51esimo"
+      in: query
+      name: offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+  schemas:
+    Destination:
+      type: object
+      required:
+        - identifier
+        - tags
+        - address
+        - location
+      properties:
+        identifier:
+          type: string
+          maxLength: 60
+          example: "165263"
+          description: | 
+            ID univoco del contenuto.\
+            Identifica univocamente il contenuto nel sistema di origine, quando il luogo viene inviato a EDT.\
+            Identifica univocamente il contenuto nel sistema EDT, quando il luogo viene restituito da EDT
+        tags:
+          type: array
+          minItems: 1
+          maxItems: 4
+          items: 
+            $ref: '#/components/schemas/Tag'
+          example: 
+            - 5
+            - 10
+          description: "Tema/categoria del contenuto. Valori ammessi:<ul><li>1: Active & Green</li><li>2: Arte e Cultura</li><li>3: Borghi</li><li>4: Cicloturismo</li><li>5: Food & Wine</li><li>6: Golf</li><li>7: Itinerari</li><li>8: Laghi</li><li>10: Lifestyle</li><li>11: Montagne</li><li>12: Musica e spettacolo</li><li>14: Parchi</li><li>15: Scuola</li><li>16: Siti Unesco</li><li>17: Sport</li><li>19: Turismo religioso</li><li>20: Wellness</li></ul>"
+        contacts:
+          type: object
+          properties:
+            email: 
+              type: string
+              maxLength: 60
+              pattern: '^(.+)@(.+)$'              
+              example: "test@test.it"
+            telephone:
+              type: string
+              maxLength: 60
+              example: "+39 12354 1235"
+            url:
+              type: string
+              maxLength: 2048
+              example: "https://site.it"
+        links:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Link'
+          description: "Link ad altri contenuti, ad es: pagine web di prenotazione o approfondimento"
+        area:
+          $ref: '#/components/schemas/Area'
+        location: 
+          $ref: '#/components/schemas/Location'
+        geo:
+          $ref: '#/components/schemas/Coords'
+        address:
+          $ref: '#/components/schemas/Address'
+        translations:
+          type: object
+          required:
+            - it
+          properties: 
+            it: 
+              $ref: '#/components/schemas/Translation'
+            en: 
+              $ref: '#/components/schemas/Translation'
+            fr: 
+              $ref: '#/components/schemas/Translation'
+            de: 
+              $ref: '#/components/schemas/Translation'
+            es: 
+              $ref: '#/components/schemas/Translation'
+          minProperties: 1
+    Coords:
+      type: object
+      required:
+        - longitude
+        - latitude
+      properties:
+        longitude:
+          type: number
+          format: float
+          example: 9.335558
+        latitude:
+          type: number
+          format: float
+          example: 45.895301
+    Tag:
+      type: integer
+      format: int32
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 14
+        - 15
+        - 16
+        - 17
+        - 18
+        - 19
+        - 20
+    Address:
+      type: object
+      required:
+        - addressLocality
+        - streetAddress
+      properties:
+        addressLocality:
+          type: string
+          maxLength: 255
+          example: "Como"
+          description: "Città / Località"
+        postalCode:
+          type: string
+          maxLength: 16
+          example: "24020"
+        streetAddress: 
+          description: Indirizzo e numero civico
+          type: string
+          maxLength: 255
+          example: "Via Roncaglia Bassa"
+        addressPlace:
+          description: una precisazione sull'indirizzo del luogo
+          type: string
+          maxLength: 255
+          example: "Vicino alla piazza"
+    Location:
+      type: integer
+      format: int32
+      description: Codice del comune (o frazione), tra quelli previsti.
+      example: 78910
+    Area:
+      type: integer
+      format: int32
+      description: "Area turistica di interesse. Valori ammessi:<ul><li>2012 : Lago di Garda</li><li>28856 : Lago di Como</li><li>28857 : Lago di Iseo e Franciacorta</li><li>28858 : Valle Camonica</li><li>28859 : Valtellina</li><li>28860 : Valchiavenna</li><li>29196 : Lago maggiore</li><li>29198 : Valmalenco</li><li>29225 : Pavese</li><li>29227 : Lomellina</li><li>29231 : Oltrepò</li><li>29234 : Lago di Lugano</li><li>29235 : Lago di Varese</li><li>29244 : Aeroporto Malpensa</li><li>29253 : Lodigiano</li></ul>"
+      example: 28856
+    Translation:
+      description: dati localizzabili e differenziabili per ciascuna lingua
+      type: object
+      required:
+        - title
+        - description
+        - images
+      properties:
+        url:
+          type: string
+          example: "https://www.in-lombardia.it/it/evento/31%C2%B0-festival-milano-musica-swr-vokalensemble-weinberg-ircam"
+          description: E' la URL del luogo pubblicato su in-lombardia.it, specifica per la traduzione corrente
+          readOnly: true
+        externalUrl:
+          type: string
+          maxLength: 2048
+          example: ""
+          description: E' la URL del luogo pubblicato sul sito di origine, da cui il luogo è stato importato, specifica per la traduzione corrente (se disponibile)
+        title:
+          type: string
+          example: "31° Festival Milano"
+          maxLength: 35
+        subtitle:
+          type: string
+          example: "La sponda orientale del Lago di Como"
+          description: Breve riassunto o introduzione al contenuto, ottimale 125 battute
+          maxLength: 150
+        description:
+          type: string
+          example: "<p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p><p class=\"intro\"><span class=\"dropcap\">L</span>a sponda orientale del Lago di Como</p>"
+          description: "Descrizione principale del contenuto. Può contenere tag HTML. I tag utilizzati dal sistema EDT Lombardia sono: a, div, p, br, em, strong, ul, ol, li, hr, h3, h4, h5, h6. Altri tag vengono accettati in input, ma successivamente eliminati in visualizzazione nei canali EDT"
+          minLength: 400
+          maxLength: 5000
+        openingHours:
+          description: Orari di apertura / accesso al luogo
+          type: string
+          example: "Dalle 20 alle 23.30. Il martedì alle 19"
+        images:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Image'
+          description: La prima immagine è la copertina del contenuto
+        video:
+          allOf:
+            - $ref: '#/components/schemas/Video'
+    Video:
+      description: Url di condivisione di un video Youtube o Vimeo pubblicamente accessibile e condivisibile
+      type: object
+      required:
+        - videoUrl
+        - videoTitle
+      properties:
+        videoUrl:
+          type: string
+          maxLength: 512
+          example: ""
+        videoTitle:
+          type: string
+          maxLength: 128
+          example: ""
+    Image:
+      description: Fattore di forma ideale 3/2, dimensioni minime 615 x 407
+      type: object
+      required:
+        - imageUrl
+        - imageCredit
+        - imageLicense
+      properties:
+        imageUrl:
+          type: string
+          maxLength: 255
+          example: "https://www.in-lombardia.it/copertina.jpg"
+          description: Indirizzo pubblicamente accessibile dell'immagine
+        imageFileName:
+          type: string
+          maxLength: 255
+          example: "copertina.jpg"
+        imageTitle:
+          type: string
+          example: "31° Festival Milano"
+          maxLength: 35
+        imageCredit:
+          type: string
+          example: "Mario Rossi"
+          maxLength: 255
+        imageLicense:
+          type: string
+          enum: 
+            - CC0
+            - CC_BY_4.0
+            - CC_BY-SA_4.0
+            - CC_BY-NC_4.0
+            - CC_BY-NC-SA_4.0
+            - CC_BY-ND_4.0
+            - CC_BY-NC-ND_4.0
+          example: "CC_BY_4.0"
+    Link:
+      type: object
+      required:
+        - linkUrl
+      properties:
+        linkUrl:
+          type: string
+          maxLength: 2048
+          example: "https://www.in-lombardia.it"
+        linkTitle:
+          type: string
+          maxLength: 128
+          example: "Portale turistico Regione Lombardia"
+    ResponseErrorMessage400:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Bad Request"
+        status:
+          type: integer
+          format: int32
+          example: 400
+        detail:
+          type: string
+          example: "Il formato dei dati non è valido"
+    ResponseErrorMessage401:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Unauthorized
+        status:
+          type: integer
+          format: int32
+          example: 401
+        detail:
+          type: string
+          example: "Credenziali di autenticazione non valide"
+    ResponseErrorMessage404:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Not found"
+        status:
+          type: integer
+          format: int32
+          example: 404
+        detail:
+          type: string
+          example: "Contenuto non trovato"
+    ResponseErrorProperty:
+      type: object
+      properties:
+        field:
+          type: string
+          description: nome del campo per il quale è fallita la validazione
+          example: "title"
+        message:
+          type: string
+          description: motivo per cui è fallita la validazione del campo
+          example: "il campo title è obbligatorio"
+
+externalDocs: 
+  description: Documento di Specifiche Tecniche per API Punti di interesse in Lombardia
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/PuntiDiInteresseInLombardia/PuntiDiInteresseInLombardia_ManualeUtente.pdf
