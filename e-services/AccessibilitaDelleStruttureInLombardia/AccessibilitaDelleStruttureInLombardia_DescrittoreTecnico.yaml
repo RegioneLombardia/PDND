@@ -53,5 +53,5 @@ paths:
 
 components: {}
 externalDocs: 
-  description: Documento di Specifiche Tecniche per Strutture Accessibili in Lombardia
+  description: Documento di Specifiche Tecniche per L'API Accessibilita Delle Strutture In Lombardia
   url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/AccessibilitaDelleStruttureInLombardia/AccessibilitaDelleStruttureInLombardia_ManualeUtente.pdf
