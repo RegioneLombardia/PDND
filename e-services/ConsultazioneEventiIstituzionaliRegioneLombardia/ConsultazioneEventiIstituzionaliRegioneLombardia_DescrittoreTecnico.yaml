@@ -11,7 +11,7 @@ info:
 servers:
     - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/eventi-rl
       description: Url in ambiente di Collaudo PDND
-    - url:
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/eventi-rl
       description: Url in ambiente di Produzione PDND
 
 paths:
