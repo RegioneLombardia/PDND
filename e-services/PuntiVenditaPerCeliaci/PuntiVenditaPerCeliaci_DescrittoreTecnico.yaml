@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: SEB CELI-API 
+  title: Punti vendita per Celiaci 
   description: Il SEB CELI-API mette a disposizione i servizi inerenti le funzionalità di consultazione dei punti erogazione aderenti al progetto regionale Celiachia per la distribuzione di alimenti senza glutine e i servizi di ricerca per prossimità.
   version: v1.0
   contact:
