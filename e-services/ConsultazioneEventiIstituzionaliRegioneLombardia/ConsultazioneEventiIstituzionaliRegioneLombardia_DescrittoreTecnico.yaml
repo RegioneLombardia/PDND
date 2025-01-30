@@ -21,16 +21,6 @@ paths:
 
   /event-platform-api-manager/events-list:
     get:
-      requestBody: 
-        description: Request Body
-        content:
-          '*/*':
-            schema:
-              type: object
-              properties:
-                payload:
-                  type: string
-        required: false
       responses:
         "200":
           description: ""
