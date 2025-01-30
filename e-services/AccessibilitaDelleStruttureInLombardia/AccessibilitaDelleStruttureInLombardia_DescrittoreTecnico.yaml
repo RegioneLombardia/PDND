@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Accessibilita Delle Strutture In Lombardia
-  description: ll servizio consente di ottenere la lista delle strutture accessibili nella Regione Lombardia. Ogni elemento censito all’interno del portale Lombardia Facile contiene informazioni che definiscono categoria di appartenenza, descrizione, indirizzo, coordinate geografiche e tutto quanto sia rilevante per individui affetti da disabilità.
+  description: Il servizio permette di ottenere la lista di strutture accessibili (es. musei, monumenti) di interesse turistico-culturale del territorio lombardo. I criteri di ricerca possono essere di tipo geografico, oppure riguardare la tipologia della struttura o i servizi di accessibilità richiesti.
   version: v1.0
   contact:
     # Contatti API Provider 
