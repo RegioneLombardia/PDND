@@ -1,0 +1,85 @@
+openapi: 3.0.1
+info:
+  title: Programmazione Triennale Lavori E Acquisti Di Beni E Servizi
+  description: |- 
+    Il servizio permette agli enti di Regione Lombardia di effettuare le comunicazioni previste dalla normativa vigente all'Osservatorio dei contratti pubblici e al Ministero delle Infrastrutture e dei Trasporti relativamente alla programmazione biennale per l’acquisto di beni e servizi e a quella triennale dei lavori pubblici.
+    Pattern Model applicati:
+    - [AUDIT_REST_02 ] Inoltro dati tracciati nel dominio del Fruitore REST con correlazione
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API 
+    email: assistenza_api@regione.lombardia.it 
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/ptpb/protected/jsonservices
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/ptpb/protected/jsonservices
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /programmitriennali:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User 
+      x-throttling-tier: Unlimited
+  
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+    
+  /programmibiennali:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User 
+      x-throttling-tier: Unlimited
+
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per l'API Programmi di Beni e Servizi e di Lavori
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/ProgrammazioneTriennaleLavoriEAcquistiDiBeniEServizi/ProgrammazioneTriennaleLavoriEAcquistiDiBeniEServizi_ManualeUtente.pdf
+
