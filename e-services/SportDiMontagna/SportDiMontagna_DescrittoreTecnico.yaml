@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: Catalogo Bandi di Regione Lombardia
-  description: Il servizio consente la ricezione delle informazioni esposte sulla piattaforma Bandi e Servizi. Nello specifico permette la ricerca, consultazione ed acquisizione delle informazioni relative all'elenco dei bandi, gare di beni e servizi, concorsi pubblici e manifestazioni di interesse promossi da Regione Lombardia e finanziati con fondi regionali, nazionali ed europei.
+  title: Sport di Montagna
+  description: Il servizio permette la raccolta di dati presenti nell'OSM (Osservatorio Regionale degli Sport di Montagna) relativi a località sciistiche, piste da sci, scuole di sci e impianti di risalita del territorio lombardo.
   version: v1.0
   contact:
     # Contatti API Provider 
