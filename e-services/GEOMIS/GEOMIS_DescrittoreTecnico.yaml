@@ -1,0 +1,73 @@
+openapi: 3.0.1
+info:
+  title: Monitoraggio Incidenti Stradali – GEOMIS
+  description: Il servizio restituisce il numero di incidenti ISTAT che insistono in un’area di interesse (buffer o comune della Regione Lombardia) e che si riferiscono ad un determinato intervallo temporale. Per intervallo temporale si intende una finestra di 3 anni a partire dall’anno definito come parametro in input.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/geomis-api
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/geomis-api
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /GPServer/getIncidentiByComune/execute?f=json:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+
+  /GPServer/getIncidentiByBuffer/execute?f=json:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+
+
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per l'API GEOMIS 
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/GEOMIS/GEOMIS_ManualeUtente.pdf
+
+
+
