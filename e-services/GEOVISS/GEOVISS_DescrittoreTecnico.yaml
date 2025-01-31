@@ -1,0 +1,68 @@
+openapi: 3.0.1
+info:
+  title: Opere per la sicurezza stradale - GEOVISS 
+  description: Il servizio restituisce il numero di interventi rivolti a migliorare la sicurezza stradale che insistono su una porzione di territorio (comune o buffer) e realizzati con finanziamenti regionali.
+  version: v1.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/geoviss-api/v1.0.0
+      description: Url in ambiente di Collaudo PDND
+    - url: TBD
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  # Ulteriori dettagli relativi alla costruzione delle chiamate sono riportati nella documentazione tecnica
+    #parameters:
+       # $ref: '#/externalDocs'
+
+  /GPServer/getInterventiByComune/execute?f=json:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /GPServer/getInterventiByBuffer/execute?f=json:
+    post:
+      requestBody: 
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per l'API GEOVISS
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/GEOVISS/GEOVISS_ManualeUtente.pdf
+
+
+
