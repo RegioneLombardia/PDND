@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/comunicaente/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ee="http://interop.servizirl.it/schema/comunicaente/1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://interop.servizirl.it/schema/ws/comunicaente/1.0">
+<documentation>
+		      Versione 1.0
+  </documentation>
+  <types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/comunicaente/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ee="http://interop.servizirl.it/schema/comunicaente/1.0" xmlns="http://schemas.xmlsoap.org/wsdl/">
+			
+  <xs:import namespace="http://interop.servizirl.it/schema/comunicaente/1.0" schemaLocation="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/ComunicazioneEnteWSServiceAUA?xsd=schema-comunicaente-types.xsd"/>
+		
+</xs:schema>
+  </types>
+  <message name="richiesta_RichiestaRispostaSincrona_RichiestaComunicaEnte_Msg">
+    <part element="ee:RichiestaComunicazioneEnte" name="parameter">
+    </part>
+  </message>
+  <message name="risposta_RichiestaRispostaSincrona_RichiestaComunicaEnte_Msg">
+    <part element="ee:RispostaComunicazioneEnte" name="return">
+    </part>
+  </message>
+  <portType name="ComunicazioneEnteWSPortType">
+    <operation name="RichiestaRispostaSincrona_RichiestaComunicaEnte">
+      <input message="tns:richiesta_RichiestaRispostaSincrona_RichiestaComunicaEnte_Msg">
+    </input>
+      <output message="tns:risposta_RichiestaRispostaSincrona_RichiestaComunicaEnte_Msg">
+    </output>
+    </operation>
+  </portType>
+  <binding name="ComunicazioneEnteWSPortBinding" type="tns:ComunicazioneEnteWSPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="RichiestaRispostaSincrona_RichiestaComunicaEnte">
+      <soap:operation soapAction="RichiestaRispostaSincrona_RichiestaComunicaEnte"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ComunicazioneEnteWSService">
+    <port binding="tns:ComunicazioneEnteWSPortBinding" name="ComunicazioneEnteWSPort">
+      <soap:address location="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/ComunicazioneEnteWSServiceAUA"/>
+    </port>
+  </service>
+</definitions>
