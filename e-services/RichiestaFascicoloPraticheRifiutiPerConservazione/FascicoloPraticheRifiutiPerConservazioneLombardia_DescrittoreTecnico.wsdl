@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/richiestapraticaconservazione/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:richiestapraticaconservazione="http://interop.servizirl.it/schema/richiestapraticaconservazione/1.0" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://interop.servizirl.it/schema/ws/richiestapraticaconservazione/1.0">
+<documentation>
+      Versione 1.0
+  </documentation>
+  <types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/richiestapraticaconservazione/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:richiestapraticaconservazione="http://interop.servizirl.it/schema/richiestapraticaconservazione/1.0" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+			
+  <xs:import namespace="http://interop.servizirl.it/schema/richiestapraticaconservazione/1.0" schemaLocation="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/RichiestaPraticaConservazioneWSServiceSAUAR?xsd=schema-richiestapraticaconservazione-types.xsd"/>
+		
+</xs:schema>
+  </types>
+  <message name="richiesta_RichiestaRispostaSincrona_RichiestaPraticaConservazione_Msg">
+    <part element="richiestapraticaconservazione:RichiestaPraticaConservazione" name="parameter">
+    </part>
+  </message>
+  <message name="risposta_RichiestaRispostaSincrona_RichiestaPraticaConservazione_Msg">
+    <part element="richiestapraticaconservazione:RispostaRichiestaPraticaConservazione" name="return">
+    </part>
+  </message>
+  <portType name="RichiestaPraticaConservazioneWSPortType">
+    <operation name="RichiestaRispostaSincrona_RichiestaPraticaConservazione">
+      <input message="tns:richiesta_RichiestaRispostaSincrona_RichiestaPraticaConservazione_Msg">
+    </input>
+      <output message="tns:risposta_RichiestaRispostaSincrona_RichiestaPraticaConservazione_Msg">
+    </output>
+    </operation>
+  </portType>
+  <binding name="RichiestaPraticaConservazioneWSPortBinding" type="tns:RichiestaPraticaConservazioneWSPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="RichiestaRispostaSincrona_RichiestaPraticaConservazione">
+      <soap:operation soapAction="RichiestaRispostaSincrona_RichiestaPraticaConservazione"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="RichiestaPraticaConservazioneWSService">
+    <port binding="tns:RichiestaPraticaConservazioneWSPortBinding" name="RichiestaPraticaConservazioneWSPort">
+      <soap:address location="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/RichiestaPraticaConservazioneWSServiceSAUAR"/>
+    </port>
+  </service>
+</definitions>
