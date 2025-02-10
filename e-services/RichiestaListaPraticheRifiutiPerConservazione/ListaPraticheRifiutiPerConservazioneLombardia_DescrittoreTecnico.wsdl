@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/getlistapraticheconservazione/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:listapraticheconservazione="http://interop.servizirl.it/schema/getlistapraticheconservazione/1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://interop.servizirl.it/schema/ws/getlistapraticheconservazione/1.0">
+<documentation>
+      Versione 1.0
+  </documentation>
+  <types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/getlistapraticheconservazione/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:listapraticheconservazione="http://interop.servizirl.it/schema/getlistapraticheconservazione/1.0" xmlns="http://schemas.xmlsoap.org/wsdl/">
+			
+  <xs:import namespace="http://interop.servizirl.it/schema/getlistapraticheconservazione/1.0" schemaLocation="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/GetListaPraticheConservazioneWSServiceSAUAR?xsd=schema-getlistapraticheconservazione-types.xsd"/>
+		
+</xs:schema>
+  </types>
+  <message name="risposta_RichiestaRispostaSincrona_GetListaPraticheConservazione_Msg">
+    <part element="listapraticheconservazione:RispostaRichiestaListaPraticheConservazione" name="return">
+    </part>
+  </message>
+  <message name="richiesta_RichiestaRispostaSincrona_GetListaPraticheConservazione_Msg">
+    <part element="listapraticheconservazione:RichiestaListaPraticheConservazione" name="parameter">
+    </part>
+  </message>
+  <portType name="GetListaPraticheConservazioneWSPortType">
+    <operation name="RichiestaRispostaSincrona_GetListaPraticheConservazione">
+      <input message="tns:richiesta_RichiestaRispostaSincrona_GetListaPraticheConservazione_Msg">
+    </input>
+      <output message="tns:risposta_RichiestaRispostaSincrona_GetListaPraticheConservazione_Msg">
+    </output>
+    </operation>
+  </portType>
+  <binding name="GetListaPraticheConservazioneWSPortBinding" type="tns:GetListaPraticheConservazioneWSPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="RichiestaRispostaSincrona_GetListaPraticheConservazione">
+      <soap:operation soapAction="RichiestaRispostaSincrona_GetListaPraticheConservazione"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="GetListaPraticheConservazioneWSService">
+    <port binding="tns:GetListaPraticheConservazioneWSPortBinding" name="GetListaPraticheConservazioneWSPort">
+      <soap:address location="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/GetListaPraticheConservazioneWSServiceSAUAR"/>
+    </port>
+  </service>
+</definitions>
