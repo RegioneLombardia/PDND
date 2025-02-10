@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/richiestaregistro/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:richiestaregistro="http://interop.servizirl.it/schema/richiestaregistro/1.0" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://interop.servizirl.it/schema/ws/richiestaregistro/1.0">
+<documentation>
+      Versione 1.0
+  </documentation>
+  <types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interop.servizirl.it/schema/ws/richiestaregistro/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:richiestaregistro="http://interop.servizirl.it/schema/richiestaregistro/1.0" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+			
+  <xs:import namespace="http://interop.servizirl.it/schema/richiestaregistro/1.0" schemaLocation="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/RichiestaRegistroWSServiceAIA?xsd=schema-richiestaregistro-types.xsd"/>
+		
+</xs:schema>
+  </types>
+  <message name="richiesta_RichiestaRispostaSincrona_RichiestaRegistro_Msg">
+    <part element="richiestaregistro:RichiestaRegistro" name="parameter">
+    </part>
+  </message>
+  <message name="risposta_RichiestaRispostaSincrona_RichiestaRegistro_Msg">
+    <part element="richiestaregistro:RispostaRichiestaRegistro" name="return">
+    </part>
+  </message>
+  <portType name="RichiestaRegistroWSPortType">
+    <operation name="RichiestaRispostaSincrona_RichiestaRegistro">
+      <input message="tns:richiesta_RichiestaRispostaSincrona_RichiestaRegistro_Msg">
+    </input>
+      <output message="tns:risposta_RichiestaRispostaSincrona_RichiestaRegistro_Msg">
+    </output>
+    </operation>
+  </portType>
+  <binding name="RichiestaRegistroWSPortBinding" type="tns:RichiestaRegistroWSPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="RichiestaRispostaSincrona_RichiestaRegistro">
+      <soap:operation soapAction="RichiestaRispostaSincrona_RichiestaRegistro"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="RichiestaRegistroWSService">
+    <port binding="tns:RichiestaRegistroWSPortBinding" name="RichiestaRegistroWSPort">
+      <soap:address location="https://api.servizirl.it/c/pdndbasic/erogazione/mutahub/services/ws/RichiestaRegistroWSServiceAIA"/>
+    </port>
+  </service>
+</definitions>
