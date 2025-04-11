@@ -1,0 +1,128 @@
+openapi: 3.0.1
+info:
+  title: Cartografie per i Trasporti Eccezionali
+  description: Servizio geografico per la consultazione delle informazioni relative ai 14 itinerari percorribili per i trasporti eccezionali
+  version: v1.0.0
+  contact:
+    # Contatti API Provider 
+    name: Assistenza API
+    email: assistenza_api@regione.lombardia.it
+
+servers:
+    - url: https://api.integrazione.lispa.it/c/pdndbasic/erogazione/arcgis5/rest/services/APIManager/PDND_CartografieTE/MapServer/ 
+      description: Url in ambiente di Collaudo PDND
+    - url: https://api.servizirl.it/c/pdndbasic/erogazione/arcgis5/rest/services/APIManager/PDND_CartografieTE/MapServer
+      description: Url in ambiente di Produzione PDND
+
+paths:
+  /PDND_CartografieTE/219:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    post:
+      requestBody:
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+
+  /PDND_CartografieTE/220:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    post:
+      requestBody:
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+  /PDND_CartografieTE/221:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    post:
+      requestBody:
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+  /PDND_CartografieTE/222:
+    get:
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    post:
+      requestBody:
+        description: Request Body
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-codegen-request-body-name: Payload
+      
+components: {}
+externalDocs: 
+  description: Documento di Specifiche Tecniche per l'API Agriturismi in Lombardia
+  url: https://github.com/RegioneLombardia/PDND/blob/main/e-services/CartografiePerITrasportiEccezionali/CartografiePerITrasportiEccezionali_ManualeUtente.pdf
+x-original-swagger-version: "2.0"
